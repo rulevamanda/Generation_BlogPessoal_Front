@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../model/User';
+import { Usuario } from '../model/Usuario';
 import { AuthService } from '../service/auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../service/auth.service';
 })
 export class CadastrarComponent implements OnInit {
 
-  user: User = new User
+  user: Usuario = new Usuario
   confirmarSenha: string
   tipoUsuario: string
 
@@ -34,10 +34,14 @@ export class CadastrarComponent implements OnInit {
   cadastrar(){
     this.user.tipo = this.tipoUsuario
 
+    if(this.user.foto == null) {
+      this.user.foto = 'https://i.imgur.com/yBbIPoj.png'
+    }
+
     if(this.user.senha != this.confirmarSenha){
       alert("passwords don't match")
     }else{
-      this.authService.cadastrar(this.user).subscribe((resp: User) => {
+      this.authService.cadastrar(this.user).subscribe((resp: Usuario) => {
         this.user = resp
         this.router.navigate(['/entrar'])
         alert('usuario cadastrado com sucesso')
